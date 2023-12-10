@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<style>
+body {
+    background-color: black;
+  }
+  
+  .container {
+    width: 1200px !important;
+    padding: 0 !important;
+    margin-right: auto;
+    margin-left: auto;
+  
+    @media screen and (min-width: 992px) and (max-width: 1439px) {
+      max-width: 1279px !important;
+      padding: 0 !important;
+      margin: 0 80px !important;
+      width: auto !important;
+    }
+  
+    @media screen and (max-width: 991px) {
+      max-width: 959px !important;
+      margin: 0 16px !important;
+      padding: 0 !important;
+      width: auto !important;
+    }
+  }
+  
+  .gradient-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    padding: 30px;
+    @media screen and (max-width: 991px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .container-title {
+    text-align: center;
+    padding: 0 !important;
+    margin-bottom: 40px;
+    font-size: 40px;
+    color: #fff;
+    font-weight: 600;
+    line-height: 60px;
+  }
+  
+  .card {
+    max-width: 550px;
+    border: 0;
+    width: 100%;
+    margin-inline: auto;
+  }
+  
+  .container-card {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(71deg, #080509, #1a171c, #080509);
+    background-clip: padding-box;
+    border-radius: 45px;
+    padding: 40px;
+    img {
+      margin-bottom: 32px;
+    }
+  }
+  
+  .bg-green-box,
+  .bg-white-box,
+  .bg-yellow-box,
+  .bg-blue-box {
+    position: relative;
+  }
+  
+  .bg-green-box::after,
+  .bg-white-box::after,
+  .bg-yellow-box::after,
+  .bg-blue-box::after {
+    position: absolute;
+    top: -1px;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+    content: "";
+    z-index: -1;
+    border-radius: 45px;
+  }
+  
+  .bg-green-box::after {
+    background: linear-gradient(71deg, #0d1212, #3da077, #0d1212);
+  }
+  
+  .bg-white-box::after {
+    background: linear-gradient(71deg, #121013, #b0afb0, #121013);
+  }
+  
+  .bg-yellow-box::after {
+    background: linear-gradient(71deg, #110e0e, #afa220, #110e0e);
+  }
+  
+  .bg-blue-box::after {
+    background: linear-gradient(71deg, #0c0a0e, #5f6fad, #0c0a0e);
+  }
+  
+  .card-title {
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.02em;
+    line-height: 40px;
+    font-style: normal;
+    font-size: 28px;
+    padding-bottom: 8px;
+  }
+  
+  .card-description {
+    font-weight: 600;
+    line-height: 32px;
+    color: hsla(0, 0%, 100%, 0.5);
+    font-size: 16px;
+    max-width: 470px;
+  }
+  * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.buttons {
+    margin: 10%;
+    text-align: center;
+}
+
+.btn-hover {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+    outline: none;
+}
+
+.btn-hover.color-1 {
+    background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+}
+.btn-hover.color-2 {
+    background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+    box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+}
+.btn-hover.color-3 {
+    background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
+    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+}
+.btn-hover.color-4 {
+    background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+    box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+}
+.btn-hover.color-5 {
+    background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+}
+.btn-hover.color-6 {
+    background-image: linear-gradient(to right, #009245, #FCEE21, #00A8C5, #D9E021);
+    box-shadow: 0 4px 15px 0 rgba(83, 176, 57, 0.75);
+}
+.btn-hover.color-7 {
+    background-image: linear-gradient(to right, #6253e1, #852D91, #A3A1FF, #F24645);
+    box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+}
+.btn-hover.color-8 {
+    background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+    box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+}
+.btn-hover.color-9 {
+    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
+.btn-hover.color-10 {
+        background-image: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
+    box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+}
+.btn-hover.color-11 {
+       background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);  box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
+}
+/******************************
+	      Boilerplate Css
+******************************/
+
+* {
+	box-sizing: border-box;
+	margin: 0px;
+	padding: 0px;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	background: #191919;
+	color: #404040;
+	font: 12px/1.4 Arial;
+	min-width: 1300px;
+	position: relative;
+}
+
+a {
+	color: #bebebe;
+	text-decoration: none;
+}
+
+ul {
+	list-style: none;
+}
+
+
+/******************************
+	  Navigation Menu
+******************************/
+
+.horizontal-menu {
+	background-color: #2c2d2f;
+	color: #BEBEBE;
+	display: block;
+	height: 50px;
+	margin: 20px auto;
+	max-width: 1100px;
+}
+
+
+/******************************
+					Globals
+******************************/
+
+.horizontal-menu.plain,
+.horizontal-menu.dropdown {
+	display: block;
+}
+
+.horizontal-menu.plain li,
+.horizontal-menu.dropdown li {
+	float: left;
+	height: 100%;
+	width: 16.6666%;
+}
+
+.horizontal-menu.plain li a,
+.horizontal-menu.dropdown li > a {
+	display: block;
+	height: 100%;
+	line-height: 50px;
+	text-align: center;
+	transition: background-position 0.2s ease 0s;
+}
+
+.horizontal-menu.plain li a,
+.horizontal-menu.dropdown li > div > a {
+	transition: background-position 0.1s ease 0s;
+}
+
+.horizontal-menu.plain li:not(.active):hover a,
+.horizontal-menu.dropdown li > div > a:hover {
+	color: #FFF;
+	background-position: 100% 0;
+}
+
+.horizontal-menu.plain li.active a:active,
+.horizontal-menu.dropdown > div:not(.active):hover > a:active {
+	background: #BA3032;
+	color: #FFF;
+}
+
+
+/******************************
+    Plain Horizontal Menu
+******************************/
+
+.horizontal-menu.plain li a {
+	background: #2c2d2f linear-gradient(to left, #3B3D3F 50%, #2c2d2f 50%) repeat scroll 0 0 / 200% 100%;
+}
+
+.horizontal-menu.plain li.active a {
+	background: #DB3839;
+	color: #FFF;
+}
+
+
+/******************************
+Horizontal Menu With Dropdowns
+******************************/
+
+.horizontal-menu.dropdown li,
+.horizontal-menu.dropdown li > a {
+	transition: background-color 0.2s ease;
+}
+
+.horizontal-menu.dropdown li {
+	position: relative;
+}
+
+.horizontal-menu.dropdown li > a {
+	text-transform: uppercase;
+}
+
+.horizontal-menu.dropdown li > div {
+	background: #2C2D2F;
+	display: none;
+	min-width: 200%;
+	overflow: hidden;
+	position: absolute;
+	padding: 10px;
+	z-index: 999;
+}
+
+.horizontal-menu.dropdown li:not(:first-of-type):not(:last-of-type) > div {
+	left: -50%;
+	border-radius: 0 0 3px 3px;
+}
+
+.horizontal-menu.dropdown li:first-of-type > div {
+	left: 0;
+	border-radius: 0 0 3px 0;
+}
+
+.horizontal-menu.dropdown li:last-of-type > div {
+	right: 0;
+	border-radius: 0 0 0 3px;
+}
+
+.horizontal-menu.dropdown li:hover > div {
+	display: block;
+}
+
+.horizontal-menu.dropdown li:hover,
+.horizontal-menu.dropdown li:hover > div {
+	background: #3B3D3F;
+}
+
+.horizontal-menu.dropdown li > div > a {
+	background: #2c2d2f linear-gradient(to left, #DB3839 50%, #2c2d2f 50%) repeat scroll 0 0 / 200% 100%;
+	border-radius: 2px;
+	display: block;
+	float: left;
+	margin: 2%;
+	padding: 8px 10px;
+	text-align: center;
+	transition: background-position 0.2s ease;
+	width: 46%;
+}
+
+.horizontal-menu.dropdown li > div > a:hover {
+	background-position: 100% 0;
+	cursor: pointer;
+}
+
+
+</style>
+  
+</html>
+<div class="container">
+    <nav class="horizontal-menu plain">
+        <ul>
+            <li><a href='/users/register/'>Register</a></li>
+            <li><a href='/users/login/'>Log In</a></li>
+            <li><a href='/users/logout'>Log Out</a></li>
+        </ul>
+    </nav>
+    
+    <p class="container-title">Here are all users, {{user}}!</p>
+  
+    <div class="gradient-cards">
+    {% for user in users %}
+      <div class="card">
+        <div class="container-card bg-green-box">
+            <defs>
+              <linearGradient id="paint0_linear_1366_4547" x1="0.0063367" y1="0.168432" x2="120.853" y2="119.009" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#2FCB89" stop-opacity="0.7"></stop>
+                <stop offset="0.489583" stop-color="#2FCB89" stop-opacity="0"></stop>
+                <stop offset="1" stop-color="#2FCB89" stop-opacity="0.7"></stop>
+              </linearGradient>
+              <radialGradient id="paint1_radial_1366_4547" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(60 60) rotate(96.8574) scale(122.674 149.921)">
+                <stop stop-color="#54E8A9"></stop>
+                <stop offset="1" stop-color="#1A3E31" stop-opacity="0.2"></stop>
+              </radialGradient>
+            </defs>
+          </svg>
+          <p class="card-title">{{user.email}}</p>
+          <p class="card-description">Bank account: {{user.bank_account}}</p>
+          <p class="card-description">Savings account: {{user.saving_account}}</p>
+          <p class="card-description">Balance: {{user.balance}}</p>
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+      <div class="buttons">
+        <a href="/accounts/">
+            <button class="btn-hover color-1" >Check your accounts</button>
+        </a>
+        <a href="/credits/">
+            <button class="btn-hover color-1" >Check your credits</button>
+        </a>
+    </div>
+    </html>
+  

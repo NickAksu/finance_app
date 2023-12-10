@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "finance-app"
+version = "0.1.0"
+description = "n"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Django = "*"
+djangorestframework = "*"
+psycopg2-binary = "^2.9.9"
+python-dotenv = "^1.0.0"
+django-extensions = "*"
+apscheduler = "^3.10.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
