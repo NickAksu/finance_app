@@ -42,7 +42,6 @@ class CreditsViewSet(mixins.ListModelMixin,
             form = CreditForm()
             context['form'] = form
             return render(request, "request_credit.html", context=context)
-        print(request.POST.items)
         user = request.user
         password = str(request.POST.get('password'))
         total_sum = float(request.POST.get('total_sum'))
