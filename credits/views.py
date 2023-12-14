@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
+from django.db import transaction
 
 from finance_app.mixins import SerializerMixin
 from credits.models import Credit
@@ -34,7 +35,7 @@ class CreditsViewSet(mixins.ListModelMixin,
         return render(request, "credits.html", context=context)
     
     
-    
+    @transaction.atomic
     @action(methods=["GET", "POST"], detail=False, url_path="request_credit")
     def request_credit(self, request: HttpRequest):
         context = {}
@@ -51,5 +52,8 @@ class CreditsViewSet(mixins.ListModelMixin,
         is_differential = str(request.POST.get('is_differential')) == 'on'
         if not (authenticate(request=request, email=user.email, password=password) and user.access_key == access_key):
             return HttpResponseBadRequest("Not valid password or access key")
-        Credit.objects.create(total_sum=total_sum, persent=persent, bank_account=user.bank_account, is_differential=is_differential, period=period)
+        with transaction.atomic():
+            Credit.objects.create(total_sum=total_sum, persent=persent, bank_account=user.bank_account, is_differential=is_differential, period=period)
+            user.bank_account.balance += total_sum
+            user.bank_account.save()
         return redirect("/credits/")

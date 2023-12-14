@@ -9,6 +9,9 @@ class Account(models.Model):
     is_activated = models.BooleanField(default=False)
     saving_percent = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     
+    def __str__(self) -> str:
+        return str(self.account_id)
+    
 class Operation(models.Model):
     sender = models.ForeignKey(Account, on_delete=models.DO_NOTHING, related_name="sender")
     reciever = models.ForeignKey(Account, on_delete=models.DO_NOTHING, related_name="reciever")
