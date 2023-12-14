@@ -42,13 +42,15 @@ class CreditsViewSet(mixins.ListModelMixin,
             form = CreditForm()
             context['form'] = form
             return render(request, "request_credit.html", context=context)
+        print(request.POST.items)
         user = request.user
         password = str(request.POST.get('password'))
         total_sum = float(request.POST.get('total_sum'))
         persent = float(request.POST.get('persent'))
         access_key = int(request.POST.get('access_key'))
+        period = int(request.POST.get("period"))
         is_differential = str(request.POST.get('is_differential')) == 'on'
         if not (authenticate(request=request, email=user.email, password=password) and user.access_key == access_key):
             return HttpResponseBadRequest("Not valid password or access key")
-        Credit.objects.create(total_sum=total_sum, persent=persent, bank_account=user.bank_account, is_differential=is_differential)
+        Credit.objects.create(total_sum=total_sum, persent=persent, bank_account=user.bank_account, is_differential=is_differential, period=period)
         return redirect("/credits/")

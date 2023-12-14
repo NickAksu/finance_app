@@ -379,49 +379,39 @@ Horizontal Menu With Dropdowns
   
 </html>
 <div class="container">
-  <nav class="horizontal-menu plain">
-    <ul>
-        <li><a href='/'>Home</a></li>
-        <li><a href='/users/register/'>Register</a></li>
-        <li><a href='/users/login/'>Log In</a></li>
-        <li><a href='/users/logout'>Log Out</a></li>
-    </ul>
-  </nav>
-    <p class="container-title">Here are all credits, {{user}}!</p>
-  
-    <div class="gradient-cards">
-    {% for credit in credits %}
-      <div class="card">
-        <div class="container-card bg-green-box">
-            <defs>
-              <linearGradient id="paint0_linear_1366_4547" x1="0.0063367" y1="0.168432" x2="120.853" y2="119.009" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#2FCB89" stop-opacity="0.7"></stop>
-                <stop offset="0.489583" stop-color="#2FCB89" stop-opacity="0"></stop>
-                <stop offset="1" stop-color="#2FCB89" stop-opacity="0.7"></stop>
-              </linearGradient>
-              <radialGradient id="paint1_radial_1366_4547" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(60 60) rotate(96.8574) scale(122.674 149.921)">
-                <stop stop-color="#54E8A9"></stop>
-                <stop offset="1" stop-color="#1A3E31" stop-opacity="0.2"></stop>
-              </radialGradient>
-            </defs>
-          </svg>
-          <p class="card-title">Total sum: {{credit.total_sum}}</p>
-          <p class="card-description">Period: {{credit.period}}</p>
-          <p class="card-description">Payed: {{credit.sum_payed}}</p>
-          <p class="card-description">Bank account: {{credit.bank_account}}</p>
-          <p class="card-description">Persent: {{credit.persent}}%</p>
-          <p class="card-description">Is differential: {{credit.is_differential}}</p>
-        </div>
-      </div>
-      {%endfor%}
-    </div>
+    <nav class="horizontal-menu plain">
+        <ul>
+            <li><a href='/'>Home</a></li>
+            <li><a href='/users/register/'>Register</a></li>
+            <li><a href='/users/login/'>Log In</a></li>
+            <li><a href='/users/logout'>Log Out</a></li>
+        </ul>
+    </nav>
+    
+    {% if user.is_authenticated %}
+    <p class="container-title">Welcome, {{user}}!</p>
       <div class="buttons">
-        <a href="/users/">
-          <button class="btn-hover color-1" >Back to users</button>
-      </a>
-        <a href="/credits/request_credit/">
-            <button class="btn-hover color-1" >Request credit</button>
+        <a href="/accounts/">
+            <button class="btn-hover color-1" >Check your accounts!</button>
         </a>
+        <a href="/credits/">
+            <button class="btn-hover color-1" >Check your credits!</button>
+        </a>
+        <a href="/users/">
+            <button class="btn-hover color-1" >Check all users!</button>
+        </a>
+      </div>
+    </div>
+    {% else %}
+    <p class="container-title">Welcome!</p>
+    <div class="buttons">
+      <a href="/users/register/">
+          <button class="btn-hover color-1" >Create an account!</button>
+      </a>
+      <a href="/users/login/">
+        <button class="btn-hover color-1" >Log in!</button>
+    </a>
+    {%endif%}
     </div>
     </html>
   

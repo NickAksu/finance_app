@@ -379,13 +379,14 @@ Horizontal Menu With Dropdowns
   
 </html>
 <div class="container">
-    <nav class="horizontal-menu plain">
-        <ul>
-            <li><a href='/users/register/'>Register</a></li>
-            <li><a href='/users/login/'>Log In</a></li>
-            <li><a href='/users/logout'>Log Out</a></li>
-        </ul>
-    </nav>
+  <nav class="horizontal-menu plain">
+    <ul>
+        <li><a href='/'>Home</a></li>
+        <li><a href='/users/register/'>Register</a></li>
+        <li><a href='/users/login/'>Log In</a></li>
+        <li><a href='/users/logout'>Log Out</a></li>
+    </ul>
+</nav>
     
     <p class="container-title">Here are all users, {{user}}!</p>
   
@@ -406,9 +407,6 @@ Horizontal Menu With Dropdowns
             </defs>
           </svg>
           <p class="card-title">{{user.email}}</p>
-          <p class="card-description">Bank account: {{user.bank_account}}</p>
-          <p class="card-description">Savings account: {{user.saving_account}}</p>
-          <p class="card-description">Balance: {{user.balance}}</p>
         </div>
       </div>
       {%endfor%}

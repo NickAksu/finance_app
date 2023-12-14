@@ -48,13 +48,14 @@ class UserViewSet(SerializerMixin,
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
+            print(f"\nemail: {user.email}", f"bank_account: {user.bank_account}\n", sep="\n")
             login(request=request, user=user)
-        return redirect('/users/')
+        return redirect('/')
     
     @action(methods=["POST", 'GET'], detail=False, url_path='logout')
     def log_out(self, request):
         logout(request)
-        return redirect('/users/')
+        return redirect('/')
     
     @action(methods=["POST", "GET"], detail=False, url_path="login")
     def _login(self, request: HttpRequest):
@@ -67,7 +68,7 @@ class UserViewSet(SerializerMixin,
             if user := authenticate(request=request, email=email, password=password):
                 if int(access_key) == user.access_key:
                     login(request=request, user=user)
-                    return redirect('/users/')
+                    return redirect('/')
                 else:
                     messages.error(request, "Incorrect access key")
             else:
