@@ -64,7 +64,7 @@ class AccountViewSet(GenericViewSet):
             balance = int(request.POST.get("balance"))
             with transaction.atomic():
                 if request.user.saving_account.is_activated:
-                    balance = save_money_to_saving_account(sum=balance, target_account=user)
+                    balance = save_money_to_saving_account(sum=balance, target_account=user.bank_account)
                 user.bank_account.balance += balance
                 user.bank_account.save()
                 Operation.objects.create(sender=user.bank_account, reciever=user.bank_account, sum_sent=balance)
