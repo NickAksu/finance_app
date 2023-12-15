@@ -10,7 +10,7 @@ def pay_all_credits():
     credits = Credit.objects.all()
     credits = [credit for credit in credits if credit.total_sum > credit.sum_payed]
     for credit in credits:
-        with transaction.atomic:
+        with transaction.atomic():
             get_sum_to_pay(credit=credit)
                                     
                                     
