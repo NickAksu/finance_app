@@ -81,7 +81,7 @@ class AccountViewSet(GenericViewSet):
             return render(request=request, template_name="send_money.html", context=context)
         if request.method == "POST":
             if request.user.bank_account.balance < int(request.POST.get("balance")):
-                messages.error("You have not enough money")
+                messages.error(request=request, message="You have not enough money")
                 return render(request=request, template_name="send_money.html", context=context)
             password = request.POST.get("password")
             access_key = int(request.POST.get("access_key"))
@@ -93,7 +93,7 @@ class AccountViewSet(GenericViewSet):
                 Operation.objects.create(sender=request.user.bank_account, reciever=target_user.bank_account, sum_sent=balance)
                 return redirect("/accounts/")
             else:
-                messages.error("Password is incorrect")
+                messages.error(request, "Password is incorrect")
             return render
         
         
