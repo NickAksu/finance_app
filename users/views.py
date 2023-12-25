@@ -6,6 +6,7 @@ from django.http import HttpRequest, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from random import randint
+from rest_framework.permissions import IsAuthenticated
 
 from users.services import send_an_email
 from users.forms import RegisterForm, LoginForm
@@ -28,6 +29,7 @@ class UserViewSet(SerializerMixin,
     }
     
     def list(self, request, *args, **kwargs):
+        '''list of all users'''
         queryset = self.filter_queryset(self.get_queryset())
 
         page = self.paginate_queryset(queryset)
@@ -41,6 +43,7 @@ class UserViewSet(SerializerMixin,
         
     @action(methods=["POST", "GET"], detail=False, url_path="register")
     def register(self, request: HttpRequest):
+        """register user to application"""
         if request.method == "GET":
             form = RegisterForm()
             context = {'form': form, "name": "Registration"}
@@ -57,8 +60,9 @@ class UserViewSet(SerializerMixin,
         logout(request)
         return redirect('/')
     
-    @action(methods=["POST", "GET"], detail=False, url_path="login")
+    @action(methods=["POST", "GET"], detail=False, url_path="login", url_name="login")
     def _login(self, request: HttpRequest):
+        '''login user to session if authentication is passed'''
         form = LoginForm()
         context = {'form': form, "name": "Login"}
         if request.method == "POST":
@@ -77,6 +81,7 @@ class UserViewSet(SerializerMixin,
     
     @action(methods=["POST"], detail=False, url_path="code")
     def code(self, request: HttpRequest):
+        """Creade an access_code and write it to db"""
         data = request.POST
         password = str(data['password'])
         email = request.POST.get('email') if not request.user.is_authenticated else request.user.email

@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.shortcuts import render, redirect
 from rest_framework.viewsets import GenericViewSet
 from rest_framework import mixins
@@ -22,6 +23,7 @@ class CreditsViewSet(mixins.ListModelMixin,
     serializer_class = CreditSerializer
     
     def list(self, request, *args, **kwargs):
+        '''list of all credits assigned to user'''
         user = request.user
         queryset = Credit.objects.filter(bank_account__in=(user.bank_account, user.saving_account))
 
@@ -38,6 +40,7 @@ class CreditsViewSet(mixins.ListModelMixin,
     @transaction.atomic
     @action(methods=["GET", "POST"], detail=False, url_path="request_credit")
     def request_credit(self, request: HttpRequest):
+        '''create a credit instance with parameters specified in request.body'''
         context = {}
         if request.method == "GET":
             form = CreditForm()
@@ -45,7 +48,7 @@ class CreditsViewSet(mixins.ListModelMixin,
             return render(request, "request_credit.html", context=context)
         user = request.user
         password = str(request.POST.get('password'))
-        total_sum = float(request.POST.get('total_sum'))
+        total_sum = Decimal(request.POST.get('total_sum'))
         persent = float(request.POST.get('persent'))
         access_key = int(request.POST.get('access_key'))
         period = int(request.POST.get("period"))

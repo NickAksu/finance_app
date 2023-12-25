@@ -1,4 +1,5 @@
 from datetime import date
+from decimal import Decimal
 from django.shortcuts import render, redirect
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin
@@ -23,6 +24,7 @@ class AccountViewSet(GenericViewSet):
     queryset = Account.objects.all()
     
     def list(self, request):
+        """return list of bank accounts assigned to user(saving account and main bank account)"""
         accounts = User.objects.filter(id=request.user.id).values("bank_account", "saving_account").first()
         context = {"savings_account": Account.objects.get(account_id=accounts["saving_account"]), "bank_account": Account.objects.get(account_id=accounts["bank_account"]), "user": request.user}
         return render(request=request, template_name="accounts.html", context=context)
@@ -32,6 +34,7 @@ class AccountViewSet(GenericViewSet):
     @action(methods=["POST", "GET"], detail=False, url_path="activate_account")
     @transaction.atomic
     def activate_account(self, request):
+        '''activate request.user saving account, so money from transactions to this user can ba saved to this account'''
         if request.method == "POST":
             with transaction.atomic():
                 request.user.saving_account.is_activated = True
@@ -51,6 +54,7 @@ class AccountViewSet(GenericViewSet):
     @action(methods=["GET", "POST"], detail=False, url_path="put_money")
     @transaction.atomic
     def put_money(self, request):
+        '''Increace bank_account balance of request.user on amount given in request body'''
         form = SendMoneyForm()
         context = {"form": form}
         if request.method == "POST":
@@ -61,7 +65,7 @@ class AccountViewSet(GenericViewSet):
             if not request.user.access_key == access_key:
                 messages.error(request=request, message="Invalid access key")
                 return render(request=request, template_name="add_money.html", context=context)
-            balance = int(request.POST.get("balance"))
+            balance = Decimal(request.POST.get("balance"))
             with transaction.atomic():
                 if request.user.saving_account.is_activated:
                     balance = save_money_to_saving_account(sum=balance, target_account=user.bank_account)
@@ -75,18 +79,19 @@ class AccountViewSet(GenericViewSet):
     @action(methods=["GET", "POST"], detail=False, url_path="send_money")
     @transaction.atomic
     def send_money(self,request):
+        """send money from request.user to user specified in request body"""
+        form = SendMoneyForm()
+        context = {"form": form}
         if request.method == "GET":
-            form = SendMoneyForm()
-            context = {"form": form}
             return render(request=request, template_name="send_money.html", context=context)
         if request.method == "POST":
-            if request.user.bank_account.balance < int(request.POST.get("balance")):
+            if request.user.bank_account.balance < Decimal(request.POST.get("balance")):
                 messages.error(request=request, message="You have not enough money")
                 return render(request=request, template_name="send_money.html", context=context)
             password = request.POST.get("password")
             access_key = int(request.POST.get("access_key"))
             if authenticate(request=request, email=request.user.email, password=password) and request.user.access_key == access_key:
-                balance = int(request.POST.get("balance"))
+                balance = Decimal(request.POST.get("balance"))
                 account_id = request.POST.get("account_id")
                 send_money_transactional(request_user=request.user, balance=balance, account_id=account_id)
                 target_user = User.objects.get(bank_account__account_id=account_id)
@@ -94,20 +99,22 @@ class AccountViewSet(GenericViewSet):
                 return redirect("/accounts/")
             else:
                 messages.error(request, "Password is incorrect")
-            return render
+            return render(request=request, template_name="send_money.html", context=context)
         
         
     @action(methods=["GET",], detail=False, url_path="operations")
-    def operatons(self, request):
+    def operations(self, request):
+        '''list of all operations made by users (self transactions and transactions to other users)'''
         all_operations = Operation.objects.all()
         return render(request=request, template_name="operations.html", context={"operations": all_operations})
     
     @action(methods=["GET", "POST"], detail=False, url_path="add_from_saved")
     @transaction.atomic
     def add_from_saved(self, request):
+        '''add money from user's saving account to main bank account'''
         if request.method == "POST":
             user = request.user
-            balance = int(request.POST.get('balance'))
+            balance = Decimal(request.POST.get('balance'))
             password = str(request.POST.get('password'))
             access_key = int(request.POST.get('access_key'))
             if not (authenticate(request, email=user.email, password=password) and user.access_key == access_key):
