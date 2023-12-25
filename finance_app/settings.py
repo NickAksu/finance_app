@@ -66,13 +66,13 @@ WSGI_APPLICATION = 'finance_app.wsgi.application'
 
 DATABASES = {
   'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'finance_db',
-    'USER': 'aksnickolas',
-    'PASSWORD': 'M6kxQX7RcGdl',
-    'HOST': 'ep-orange-salad-a2jg3rwm.eu-central-1.aws.neon.tech',
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'nickolas$default',
+    'USER': 'nickolas',
+    'PASSWORD': 'oklpijk123',
+    'HOST': 'nickolas.mysql.pythonanywhere-services.com',
     'PORT': '5432',
-    'OPTIONS': {'sslmode': 'require'},
+    # 'OPTIONS': {'sslmode': 'require'},
   }
 }
 
