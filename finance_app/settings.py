@@ -65,14 +65,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'finance_app.wsgi.application'
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": str(os.environ.get("POSTGRES_DB")),
-        "USER": str(os.environ.get("POSTGRES_USER")),
-        "PASSWORD": str(os.environ.get("POSTGRES_PASSWORD")),
-        "HOST": str(os.environ.get("POSTGRES_HOST")),
-        "PORT": str(os.environ.get("POSTGRES_PORT")),
-    },
+  'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': 'finance_db',
+    'USER': 'aksnickolas',
+    'PASSWORD': 'M6kxQX7RcGdl',
+    'HOST': 'ep-orange-salad-a2jg3rwm.eu-central-1.aws.neon.tech',
+    'PORT': '5432',
+    'OPTIONS': {'sslmode': 'require'},
+  }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
